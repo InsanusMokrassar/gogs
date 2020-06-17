@@ -1,4 +1,4 @@
-FROM golang:alpine3.11 AS binarybuilder
+FROM arm32v7/golang:1.14-alpine3.11 AS binarybuilder
 RUN apk --no-cache --no-progress add --virtual \
   build-deps \
   build-base \
@@ -9,9 +9,9 @@ WORKDIR /gogs.io/gogs
 COPY . .
 RUN make build-no-gen TAGS="cert pam"
 
-FROM alpine:3.11
-ADD https://github.com/tianon/gosu/releases/download/1.11/gosu-amd64 /usr/sbin/gosu
-RUN chmod +x /usr/sbin/gosu \
+FROM arm32v7/alpine:3.11
+ADD https://github.com/tianon/gosu/releases/download/1.11/gosu-arm64 /usr/sbin/gosu
+RUN chmod -R 777 /tmp/ && chmod +x /usr/sbin/gosu \
   && echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories \
   && apk --no-cache --no-progress add \
   bash \

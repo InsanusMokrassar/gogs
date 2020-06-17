@@ -17,6 +17,6 @@ app=gogs-rpi
 version=0.11.91
 username=insanusmokrassar
 
-assert_success docker build -t $app:"$version" docker
+assert_success docker build -t $app:"$version" .
 assert_success docker tag $app:"$version" $username/$app
 assert_success docker push $username/$app
